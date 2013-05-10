@@ -3,38 +3,38 @@
 function test_string_find_returns_nil_if_pattern_not_matched()
   local str = 'banana'
   local pattern = 'lalala'
-  assert_equal(__, string.find(str, pattern))
+  assert_equal(nil, string.find(str, pattern))
 end
 
 function test_string_find_a_pattern()
   local str = 'banana'
   local pattern = 'an'
   local start_pos, end_pos = string.find(str, pattern)
-  assert_equal(__, start_pos)
-  assert_equal(__, end_pos)
+  assert_equal(2, start_pos)
+  assert_equal(3, end_pos)
 end
 
 function test_string_find_a_pattern_with_starting_position()
   local str = 'banana'
   local pattern = 'an'
   local start_pos, end_pos = string.find(str, pattern, 4)
-  assert_equal(__, start_pos)
-  assert_equal(__, end_pos)
+  assert_equal(4, start_pos)
+  assert_equal(5, end_pos)
 end
 
 function test_dots_are_interpreted_as_any_char()
   local str = 'banana'
   local pattern = 'a...'
   local start_pos, end_pos = string.find(str, pattern)
-  assert_equal(__, start_pos)
-  assert_equal(__, end_pos)
+  assert_equal(2, start_pos)
+  assert_equal(5, end_pos)
 end
 
 function test_dots_are_not_interpreted_as_any_char_if_param_4_is_true()
   local str = 'banana'
   local pattern = 'a...'
   local start_pos, end_pos = string.find(str, pattern, 1, true)
-  assert_equal(__, start_pos)
+  assert_equal(nil, start_pos)
 end
 
 -- this is not a test, but a helper local function
