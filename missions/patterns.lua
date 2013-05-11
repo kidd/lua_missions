@@ -43,7 +43,7 @@ local function find(str, pattern, start)
 end
 
 function test_find_helper()
-  assert_equal(__, find('find waldo on this phrase', 'w....'))
+  assert_equal("waldo", find('find waldo on this phrase', 'w....'))
 end
 
 function test_character_classes()
@@ -53,11 +53,11 @@ function test_character_classes()
   local upper       = '%u'
   local percent     = '%%'
 
-  assert_equal(__, find('1 4m 1337', letter))
-  assert_equal(__, find('This is the 2nd example', digit))
-  assert_equal(__, find('UPPER lower', lower))
-  assert_equal(__, find('UPPER lower', upper))
-  assert_equal(__, find('100% escaped', percent))
+  assert_equal("m", find('1 4m 1337', letter))
+  assert_equal( "2", find('This is the 2nd example', digit))
+  assert_equal("l", find('UPPER lower', lower))
+  assert_equal("U", find('UPPER lower', upper))
+  assert_equal("%", find('100% escaped', percent))
 
   -- other character classes:
   -- %c matches any control character
@@ -68,79 +68,79 @@ end
 function test_character_sets()
   local str = "This is my phrase"
   local pattern = "[xz1p]"
-  assert_equal(__, find(str, pattern))
+  assert_equal("p", find(str, pattern))
 end
 
 function test_negated_character_sets()
   local str = "This is my phrase"
   local pattern = "[^This ]"
-  assert_equal(__, find(str, pattern))
+  assert_equal("m", find(str, pattern))
 end
 
 function test_character_ranges()
   local str = "a time of wonder"
   local pattern = "[d-f]"
-  assert_equal(__, find(str, pattern))
+  assert_equal("e", find(str, pattern))
 end
 
 function test_negated_character_ranges()
   local str = "a time of wonder"
   local pattern = "[^a-z]"
-  assert_equal(__, find(str, pattern))
+  assert_equal(" ", find(str, pattern))
 end
 
 function test_zero_or_more()
-  assert_equal(__, find('I am at your service', 'ax*'))
+  assert_equal("a", find('I am at your service', 'ax*'))
 end
 
 function test_one_or_more()
-  assert_equal(__, find('I think 1979 was a great year', '%d+'))
+  assert_equal("1979", find('I think 1979 was a great year', '%d+'))
 end
 
 function test_one_or_none()
-  assert_equal(__, find('Pattern matching is amazing', 'is?'))
+  assert_equal("i", find('Pattern matching is amazing', 'is?'))
 end
 
 function test_string_find_with_one_capture()
   local str = "Today's word is: eclectic"
   local pattern = ": (.+)"
   local start_pos, end_pos, match = string.find(str, pattern)
-  assert_equal(__, match)
+  assert_equal("eclectic", match)
 end
 
 function test_string_find_with_several_captures()
   local str = "Today's word is: eclectic"
   local pattern = "(w%a+).*: (.+)"
   local _, _, match1, match2 = string.find(str, pattern)
-  assert_equal(__, match1)
-  assert_equal(__, match2)
+  assert_equal("word", match1)
+  assert_equal("eclectic", match2)
 end
 
 function test_string_find_nested_captures()
   local str = "Today's word is: eclectic"
   local pattern = ": (..(.+)..)"
   local _, _, match1, match2 = string.find(str, pattern)
-  assert_equal(__, match1)
-  assert_equal(__, match2)
+  assert_equal("eclectic", match1)
+  assert_equal("lect", match2)
 end
 
 function test_string_gsub_with_a_string()
   local str = "Today's word is: eclectic"
   local pattern = "(e%a+)"
   local result = string.gsub(str, pattern, 'banana')
-  assert_equal(__, result)
+  assert_equal("Today's word is: banana", result)
 end
 
 function test_string_gsub_with_a_function()
   local str = "Today's word is: eclectic"
   local pattern = "(e%a+)"
   local result = string.gsub(str, pattern, string.upper)
-  assert_equal(__, result)
+  assert_equal("Today's word is: ECLECTIC", result)
 end
 
 function test_string_gsub_with_an_anonymous_function()
   local str = "Today's word is: eclectic"
   local pattern = "(e%a+)"
   local result = string.gsub(str, pattern, function(x) return '<'.. x ..'>' end)
-  assert_equal(__, result)
+  assert_equal("Today's word is: <eclectic>", result)
 end
