@@ -9,6 +9,20 @@
 
 -- INSERT YOUR CODE HERE
 
+ns = {}
+function ns.starts_with(str, s)
+	 local l = #s
+	 return str:sub(1, l)
+end
+
+function ns.ends_with(str, s)
+	 local l = #s
+	 return str:sub((-l), -1)
+end
+
+
+getmetatable("").__index.starts_with = ns.starts_with
+getmetatable("").__index.ends_with = ns.ends_with
 
 -- END OF CODE INSERT
 
@@ -29,11 +43,3 @@ function test_ends_with()
 end
 
 -- hint: string == getmetatable("").__index
-
-
-
-
-
-
-
-
